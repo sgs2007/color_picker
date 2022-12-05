@@ -33,65 +33,68 @@ class ColorHistoryModalWindow extends StatelessWidget {
             vertical: _defaultPadding,
             horizontal: _defaultPadding,
           ),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Color History',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Color History',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: _defaultPadding,
+              ),
+              const Divider(),
+              const SizedBox(
+                height: _defaultPadding,
+              ),
+              AnimatedBuilder(
+                animation: colorController,
+                builder: (context, _) => Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: colorController.prevColors.length,
+                    itemBuilder: (context, index) => colorController
+                            .prevColors.isNotEmpty
+                        ? Padding(
+                            key: Key(
+                                '$index-${colorController.prevColors[index].value}'),
+                            padding: const EdgeInsets.only(
+                              bottom: _defaultPadding,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                colorController.setPrevColor(index);
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    color: colorController.prevColors[index]),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
                   ),
                 ),
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: _defaultPadding,
-            ),
-            const Divider(),
-            const SizedBox(
-              height: _defaultPadding,
-            ),
-            AnimatedBuilder(
-              animation: colorController,
-              builder: (context, _) => Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: colorController.prevColors.length,
-                  itemBuilder: (context, index) =>
-                      colorController.prevColors.isNotEmpty
-                          ? Padding(
-                              key: Key(
-                                  '$index-${colorController.prevColors[index].value}'),
-                              padding: const EdgeInsets.only(
-                                bottom: _defaultPadding,
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  colorController.setPrevColor(index);
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      color: colorController.prevColors[index]),
-                                ),
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                ),
               ),
-            ),
-            const SizedBox(
-              height: _defaultPadding,
-            ),
-          ]),
+              const SizedBox(
+                height: _defaultPadding,
+              ),
+            ],
+          ),
         ),
       ),
     );

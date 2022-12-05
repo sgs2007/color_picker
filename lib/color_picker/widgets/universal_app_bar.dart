@@ -13,12 +13,8 @@ class UniversalAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ColorPickerController.instance;
-    return SafeArea(
-      child: AnimatedBuilder(
-        animation: controller,
-        builder: (context, _) => const PrevColorButton(),
-      ),
+    return const SafeArea(
+      child: PrevColorButton(),
     );
   }
 }
